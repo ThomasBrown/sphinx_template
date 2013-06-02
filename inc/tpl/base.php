@@ -1,0 +1,13 @@
+<html>
+<head>
+	<title>{{title}}</title>
+</head>
+<body>
+	<nav>
+		{{nav}}
+	</nav>
+	{{content}}
+	<hr>
+	{{fromFile}}
+</body>
+</html>
