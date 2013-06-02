@@ -90,7 +90,9 @@ class Template{
      * @param bool $isOutsideOfBaseTemplatePath (optional)
      * @return $this
      */
-    public function setVariableFromTemplate($variable, $templateFile, $isOutsideOfBaseTemplatePath = FALSE ){
+    public function setVariableFromTemplate( $variable, $templateFile, $isOutsideOfBaseTemplatePath = FALSE ){
+        if( preg_match( '#.*\.php$#i', $templateFile ) !== 0 ) $isOutsideOfBaseTemplatePath = TRUE;
+
         try{
             ob_start();
             include $isOutsideOfBaseTemplatePath ? $templateFile : $this->baseTemplatePath.$templateFile.'.php';
@@ -98,6 +100,18 @@ class Template{
         } catch (Exception $ex){
 
             exit($ex);
+        }
+
+        return $this;
+    }
+
+    /**
+     * @param array $templates
+     * @return $this
+     */
+    public function setVariablesFromTemplates( array $templates ){
+        foreach( $templates as $variable => $templateFile ){
+            $this->setVariableFromTemplate( $variable, $templateFile );
         }
 
         return $this;
